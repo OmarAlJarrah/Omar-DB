@@ -1,11 +1,12 @@
-package com.omar.model.database;
+package com.omar.model.database.implementation.metadata;
 
 
+import com.omar.model.data.SchemaMetadata;
 import lombok.Builder;
 import java.util.List;
 
 @Builder
-public class DatabaseMetadata {
+public class OmarDBMetadata {
   Id id;
   String databaseName;
   List<Id> nodesIds;
