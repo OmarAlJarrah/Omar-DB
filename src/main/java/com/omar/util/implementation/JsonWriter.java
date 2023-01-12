@@ -67,15 +67,4 @@ public class JsonWriter implements Writer {
       }
     }
   }
-
-  public static void main(String[] args) {
-    JsonParser parser = new JsonParser();
-    JSONObject object = (JSONObject) parser.parse(
-        new File("/Users/oaljarrah/IdeaProjects/Omar-DB/DB/table/7954bc95-46e3-4d5f-8cf1-12482e618cc5")
-    );
-    JsonWriter writer = new JsonWriter();
-//    writer.write(new Id(UUID.fromString("7954bc95-46e3-4d5f-8cf1-12482e618cc5")), object, "table");
-    writer.writeJsonObjectToFiles("/Users/oaljarrah/IdeaProjects/Omar-DB/DB/table/test", object);
-    System.out.println(object);
-  }
 }
