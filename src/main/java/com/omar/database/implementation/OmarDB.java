@@ -6,6 +6,7 @@ import com.omar.model.database.abstraction.Table;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class OmarDB implements Database {
   private List<Table> tables;
@@ -45,4 +46,6 @@ public class OmarDB implements Database {
   public List<Table> getTables() {
     return null;
   }
+
+  public Optional<String> delete(UUID id){return Optional.empty();}
 }
