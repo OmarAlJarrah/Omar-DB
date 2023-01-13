@@ -1,4 +1,4 @@
-package com.omar.model.access.implementation;
+package com.omar.model.access.impl;
 
 public enum PermissionStatus {
   ALLOWED(true),

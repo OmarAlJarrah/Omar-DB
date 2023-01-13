@@ -1,7 +1,7 @@
-package com.omar.model.access.implementation;
+package com.omar.model.access.impl;
 
 import com.omar.model.access.abstraction.Permission;
-import com.omar.model.database.abstraction.Table;
+import com.omar.model.db.abstraction.Table;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

@@ -1,4 +1,4 @@
-package com.omar.util.implementation;
+package com.omar.util.impl;
 
 import org.springframework.stereotype.Component;
 

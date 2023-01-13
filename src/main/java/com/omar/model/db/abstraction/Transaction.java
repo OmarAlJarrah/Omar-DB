@@ -1,4 +1,4 @@
-package com.omar.model.database.abstraction;
+package com.omar.model.db.abstraction;
 
 import java.util.Optional;
 

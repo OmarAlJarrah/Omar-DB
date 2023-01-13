@@ -1,11 +1,9 @@
-package com.omar.model.access.implementation;
+package com.omar.model.access.impl;
 
-import com.omar.constant.Concurrency;
 import com.omar.model.access.abstraction.Permission;
 
-import java.util.*;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 public class User {
   public String firstName;

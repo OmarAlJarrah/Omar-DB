@@ -1,10 +1,9 @@
-package com.omar.util.implementation;
+package com.omar.util.impl;
 
 import com.omar.constant.Constant;
-import com.omar.model.database.abstraction.Table;
-import com.omar.model.database.implementation.metadata.Id;
+import com.omar.model.db.abstraction.Table;
+import com.omar.model.db.impl.metadata.Id;
 import com.omar.util.abstraction.RecordPathBuilder;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 

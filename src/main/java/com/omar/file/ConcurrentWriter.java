@@ -1,9 +1,9 @@
 package com.omar.file;
 
 import com.omar.constant.Concurrency;
-import com.omar.model.database.implementation.metadata.Id;
+import com.omar.model.db.impl.metadata.Id;
 import com.omar.util.abstraction.RecordPathBuilder;
-import com.omar.util.implementation.JsonWriter;
+import com.omar.util.impl.JsonWriter;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 

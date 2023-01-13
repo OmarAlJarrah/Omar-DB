@@ -1,4 +1,4 @@
-package com.omar.query.implementation;
+package com.omar.query.impl;
 
 import com.omar.query.abstraction.Processor;
 

@@ -1,8 +1,8 @@
-package com.omar.util.implementation;
+package com.omar.util.impl;
 
 import com.omar.constant.FileExtension;
-import com.omar.model.database.abstraction.Table;
-import com.omar.model.database.implementation.metadata.Id;
+import com.omar.model.db.abstraction.Table;
+import com.omar.model.db.impl.metadata.Id;
 import com.omar.util.abstraction.Writer;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Primary;
@@ -12,10 +12,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Iterator;
-import java.util.UUID;
 
 @Component
 @Primary

@@ -1,4 +1,4 @@
-package com.omar.model.database.implementation.metadata;
+package com.omar.model.db.impl.metadata;
 
 import java.util.UUID;
 

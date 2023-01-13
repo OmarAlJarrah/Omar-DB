@@ -1,4 +1,4 @@
-package com.omar.model.database.abstraction;
+package com.omar.model.db.abstraction;
 
 import com.omar.model.data.filter.abstraction.Filter;
 

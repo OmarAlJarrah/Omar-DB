@@ -1,7 +1,7 @@
 package com.omar.util.abstraction;
 
-import com.omar.model.database.abstraction.Table;
-import com.omar.model.database.implementation.metadata.Id;
+import com.omar.model.db.abstraction.Table;
+import com.omar.model.db.impl.metadata.Id;
 
 public interface RecordPathBuilder {
   String buildPathString(Table table, Id id);

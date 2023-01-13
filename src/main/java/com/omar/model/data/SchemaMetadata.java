@@ -1,6 +1,6 @@
 package com.omar.model.data;
 
-import com.omar.model.database.implementation.metadata.Id;
+import com.omar.model.db.impl.metadata.Id;
 import lombok.Builder;
 
 import java.util.List;

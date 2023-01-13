@@ -1,6 +1,6 @@
-package com.omar.model.database.implementation.transaction;
+package com.omar.model.db.impl.transaction;
 
-import com.omar.model.database.abstraction.Transaction;
+import com.omar.model.db.abstraction.Transaction;
 
 import java.util.List;
 import java.util.Optional;

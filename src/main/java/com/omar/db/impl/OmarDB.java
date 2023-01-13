@@ -1,8 +1,8 @@
-package com.omar.database.implementation;
+package com.omar.db.impl;
 
-import com.omar.database.abstraction.Database;
+import com.omar.db.abstraction.Database;
 import com.omar.model.data.filter.abstraction.Filter;
-import com.omar.model.database.abstraction.Table;
+import com.omar.model.db.abstraction.Table;
 
 import java.util.List;
 import java.util.Optional;

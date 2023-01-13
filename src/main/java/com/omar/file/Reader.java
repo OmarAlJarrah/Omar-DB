@@ -1,9 +1,8 @@
 package com.omar.file;
 
-import com.omar.constant.Constant;
-import com.omar.model.database.abstraction.Table;
-import com.omar.model.database.implementation.metadata.EmptyId;
-import com.omar.model.database.implementation.metadata.Id;
+import com.omar.model.db.abstraction.Table;
+import com.omar.model.db.impl.metadata.EmptyId;
+import com.omar.model.db.impl.metadata.Id;
 import com.omar.model.exception.RecordNotFoundException;
 import com.omar.model.exception.TableNotFoundException;
 import com.omar.util.abstraction.Parser;
@@ -11,8 +10,9 @@ import com.omar.util.abstraction.RecordPathBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 
 @Component
