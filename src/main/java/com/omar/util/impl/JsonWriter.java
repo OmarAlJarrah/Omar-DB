@@ -1,10 +1,13 @@
 package com.omar.util.impl;
 
+import com.omar.constant.Constant;
 import com.omar.constant.FileExtension;
 import com.omar.model.db.abstraction.Table;
 import com.omar.model.db.impl.metadata.Id;
+import com.omar.util.abstraction.RecordPathBuilder;
 import com.omar.util.abstraction.Writer;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +20,8 @@ import java.util.Iterator;
 @Component
 @Primary
 public class JsonWriter implements Writer {
+  @Autowired
+  private RecordPathBuilder recordPathBuilder;
 
   @Override
   public void write(Id id, JSONObject jsonObject, Table table) {
@@ -25,14 +30,7 @@ public class JsonWriter implements Writer {
 
   @Override
   public void write(Id id, JSONObject object, String tableName) {
-    object = object.getJSONObject("7954bc95-46e3-4d5f-8cf1-12482e618cc5").getJSONObject("name");
-    Iterator<String> keys = object.keys();
-    System.out.println(object);
-
-    while (keys.hasNext()) {
-      String key = keys.next();
-      System.out.println("KEY: " + key + ", Class: " + object.get(key).getClass());
-    }
+    writeJsonObjectToFiles(recordPathBuilder.buildPathString(tableName ,id), new JSONObject());
   }
 
   private void writeJsonObjectToFiles(String currentPath, JSONObject object) {

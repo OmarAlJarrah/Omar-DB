@@ -17,35 +17,17 @@ import java.util.UUID;
 
 @Component
 public class Reader {
-  @Autowired private RecordPathBuilder recordPathBuilder;
-  @Autowired private Parser parser;
+  @Autowired
+  private RecordPathBuilder recordPathBuilder;
+  @Autowired
+  private Parser parser;
 
-  private void handleMissingData(String tableName, Id id) throws TableNotFoundException, RecordNotFoundException {
-    File tablePath = new File(
-        recordPathBuilder.buildPathString(
-            tableName,
-            new EmptyId(UUID.fromString(id.toString()))
-        )
-    );
 
-    File recordPath = new File(recordPathBuilder.buildPathString(tableName, id));
-
-    if (!tablePath.exists() || !tablePath.isDirectory()) {
-      throw new TableNotFoundException();
-    }
-
-    if (!recordPath.exists() || !recordPath.isDirectory()) {
-      throw new RecordNotFoundException();
-    }
-  }
-
-  public Object getJsonObject(Table table, Id id) throws RecordNotFoundException, TableNotFoundException {
+  public Object getJsonObject(Table table, Id id) {
     return getJsonObject(table.getName(), id);
   }
 
-  public Object getJsonObject(String tableName, Id id) throws RecordNotFoundException, TableNotFoundException {
-    handleMissingData(tableName, id);
-
+  public Object getJsonObject(String tableName, Id id) {
     return parser.parse(new File(
         recordPathBuilder.buildPathString(tableName, id)
     ));

@@ -20,6 +20,11 @@ public class JsonParser implements Parser {
   public Object parse(File file) {
     JSONObject result = new JSONObject();
 
+    if (!file.exists()) {
+      result.put(file.getName(), new JSONObject());
+      return result;
+    }
+
     if (file.isDirectory()) {
       JSONObject childJsonObject = new JSONObject();
       for (String child : Objects.requireNonNull(file.list())) {
@@ -61,8 +66,9 @@ public class JsonParser implements Parser {
 //  public Object parsePartially()
 
   public static void main(String[] args) {
-    Parser parser = new JsonParser();
-    var res = parser.parse(new File("/Users/oaljarrah/IdeaProjects/Omar-DB/DB/table/7954bc95-46e3-4d5f-8cf1-12482e618cc5"));
-    System.out.println(res.toString());
+//    Parser parser = new JsonParser();
+//    var res = parser.parse(new File("/Users/oaljarrah/IdeaProjects/Omar-DB/DB/table/7954bc95-46e3s-4d5f-8cf1-12482e618cc5"));
+//    System.out.println(res.toString());
+
   }
 }
