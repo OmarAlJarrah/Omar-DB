@@ -1,6 +1,5 @@
 package com.omar.util.impl;
 
-import com.omar.constant.Constant;
 import com.omar.constant.FileExtension;
 import com.omar.model.db.abstraction.Table;
 import com.omar.model.db.impl.metadata.Id;

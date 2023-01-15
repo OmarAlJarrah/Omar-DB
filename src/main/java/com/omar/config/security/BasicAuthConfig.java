@@ -41,6 +41,4 @@ public class BasicAuthConfig {
   public PasswordEncoder bCryptPasswordEncoder() {
     return new BCryptPasswordEncoder(10);
   }
-
-
 }
