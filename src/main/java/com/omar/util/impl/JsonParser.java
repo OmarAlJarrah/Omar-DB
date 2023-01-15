@@ -5,10 +5,7 @@ import org.json.JSONObject;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -46,24 +43,11 @@ public class JsonParser implements Parser {
       result.put(file.getName(), childJsonObject);
 
     } else {
-      StringJoiner jsonString = new StringJoiner("\n");
-      try (var reader = new BufferedReader(new FileReader(file))) {
-        for (String line : reader.lines().toList()) {
-          jsonString.add(line);
-        }
-
-        result = new JSONObject(jsonString.toString());
-
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
+      result = FileUtils.readJsonFile(file);
     }
 
     return result;
   }
-
-  // TODO: implement the following function
-//  public Object parsePartially()
 
   public static void main(String[] args) {
 //    Parser parser = new JsonParser();
