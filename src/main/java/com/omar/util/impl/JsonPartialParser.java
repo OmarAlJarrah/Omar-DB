@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.StringJoiner;
+import java.util.*;
 
 @Component
 public class JsonPartialParser implements PartialParser {
@@ -23,7 +21,7 @@ public class JsonPartialParser implements PartialParser {
 
     String fileName = FilenameUtils.getBaseName(file.getName());
 
-    if (shouldUseParse(query, file.getName())) {
+    if (shouldUseParse(query, fileName)) {
       return parser.parse(file);
     }
 

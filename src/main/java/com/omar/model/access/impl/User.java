@@ -1,5 +1,6 @@
 package com.omar.model.access.impl;
 
+import com.google.gson.Gson;
 import com.omar.model.access.abstraction.Permission;
 import com.omar.model.db.impl.metadata.Id;
 
