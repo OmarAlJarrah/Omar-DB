@@ -29,7 +29,7 @@ public class JsonWriter implements Writer {
 
   @Override
   public void write(Id id, JSONObject object, String tableName) {
-    writeJsonObjectToFiles(recordPathBuilder.buildPathString(tableName ,id), new JSONObject());
+    writeJsonObjectToFiles(recordPathBuilder.buildPathString(tableName ,id), object);
   }
 
   private void writeJsonObjectToFiles(String currentPath, JSONObject object) {
@@ -54,9 +54,10 @@ public class JsonWriter implements Writer {
       FileUtils.createFileIfAbsent(filePath);
 
       try (var writer = new BufferedWriter(new FileWriter(filePath))) {
-        writer.write(object.toString());
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put(key, object.get(key).toString());
+        writer.write(jsonObject.toString());
       } catch (IOException e) {
-        System.out.println(filePath);
         e.printStackTrace();
       }
     }

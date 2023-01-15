@@ -1,8 +1,11 @@
 package com.omar.config.security;
 
 import com.omar.file.Reader;
+import com.omar.model.access.impl.Role;
+import com.omar.model.data.filter.abstraction.Filter;
 import com.omar.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -12,6 +15,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -27,6 +36,8 @@ public class BasicAuthConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
     httpSecurity
         .authorizeRequests()
+        .antMatchers("*/users/*")
+        .hasRole(Role.ROLE_ADMIN.role)
         .anyRequest()
         .authenticated()
         .and()

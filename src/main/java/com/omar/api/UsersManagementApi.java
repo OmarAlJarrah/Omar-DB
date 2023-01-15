@@ -3,23 +3,20 @@ package com.omar.api;
 import com.google.gson.Gson;
 import com.omar.model.access.impl.Role;
 import com.omar.model.access.impl.User;
-import com.omar.model.exception.UserAlreadyExistsException;
 import com.omar.service.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
-@RestController("/users")
+@RestController
+@RequestMapping("/users")
 public class UsersManagementApi {
-  @Autowired
-  private PasswordEncoder passwordEncoder;
-
   @Autowired
   UserManagementService service;
 
@@ -36,10 +33,14 @@ public class UsersManagementApi {
           .password(UUID.randomUUID().toString())
           .build();
 
+      if (!user.getRole().equals(Role.ROLE_ADMIN)) {
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+      }
+
       service.addUser(user);
       response = new ResponseEntity<>(gson.toJson(user), HttpStatus.ACCEPTED);
-    } catch (UserAlreadyExistsException e) {
-      response = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    } catch (Exception e) {
+      response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     return response;
   }

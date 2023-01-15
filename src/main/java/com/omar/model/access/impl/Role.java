@@ -1,8 +1,8 @@
 package com.omar.model.access.impl;
 
 public enum Role {
-  ROLE_ADMIN("ROLE_ADMIN"),
-  ROLE_USER("ROLE_USER");
+  ROLE_ADMIN("ADMIN"),
+  ROLE_USER("USER");
 
   public final String role;
 

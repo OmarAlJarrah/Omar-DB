@@ -28,18 +28,17 @@ public class ConcurrentWriter {
 
     appendToPool(file);
     synchronized (recordLockPool.get(file.getAbsolutePath())) {
-      System.out.println(jsonObject);
       jsonWriter.write(id, jsonObject, tableName);
     }
   }
 
   public void writeUser(JSONObject user) {
     Id id = new Id(UUID.fromString(user.getString("username")));
+    user.put("id", id.toString());
     File file = new File(recordPathBuilder.buildPathString(String.valueOf(Constant.USERS),id));
 
     appendToPool(file);
     synchronized (recordLockPool.get(file.getAbsolutePath())) {
-      System.out.println(user);
       jsonWriter.write(id, user, Constant.USERS.name());
     }
   }
