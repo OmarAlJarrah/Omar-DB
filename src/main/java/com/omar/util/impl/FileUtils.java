@@ -7,6 +7,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.StringJoiner;
 
 @Component
@@ -26,7 +28,11 @@ public class FileUtils {
   public static void createDirectoryIfAbsent(String filePath) {
     File file = new File(filePath);
     if (!file.exists()) {
-      file.mkdir();
+      try {
+        Files.createDirectories(Paths.get(filePath));
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
   }
 

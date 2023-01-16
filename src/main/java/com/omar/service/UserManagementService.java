@@ -1,6 +1,6 @@
 package com.omar.service;
 
-import com.omar.constant.Constant;
+import com.omar.constant.CollectionConstants;
 import com.omar.file.ConcurrentWriter;
 import com.omar.file.Reader;
 import com.omar.model.access.impl.User;
@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserManagementService {
   @Autowired
-  Reader reader;
+  private Reader reader;
 
   @Autowired
-  ConcurrentWriter writer;
+  private ConcurrentWriter writer;
 
   @Autowired
-  PasswordEncoder encoder;
+  private PasswordEncoder encoder;
 
   public void addUser(User user) throws UserAlreadyExistsException {
     user = new User.UserBuilder()
@@ -29,7 +29,7 @@ public class UserManagementService {
         .password(encoder.encode(user.getPassword()))
         .build();
 
-    JSONObject other = ((JSONObject) reader.getJsonObject(Constant.USERS.name(), user.getId())).getJSONObject(user.getUsername());
+    JSONObject other = ((JSONObject) reader.getJsonObject(CollectionConstants.USERS.name(), user.getId())).getJSONObject(user.getUsername());
     boolean userNotExists = other == null || other.isEmpty();
     if (!userNotExists) {
       throw new UserAlreadyExistsException();

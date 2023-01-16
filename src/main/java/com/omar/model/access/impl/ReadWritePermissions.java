@@ -1,18 +1,18 @@
 package com.omar.model.access.impl;
 
 import com.omar.model.access.abstraction.Permission;
-import com.omar.model.db.abstraction.Table;
+import com.omar.model.db.abstraction.DataCollection;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public class ReadWritePermissions implements Permission {
   private final PermissionStatus readPermission;
   private final PermissionStatus writePermission;
-  private final Table resource;
+  private final DataCollection resource;
 
 
   // Constructors
-  private ReadWritePermissions(PermissionStatus readPermission, PermissionStatus writePermission, Table resource) {
+  private ReadWritePermissions(PermissionStatus readPermission, PermissionStatus writePermission, DataCollection resource) {
     this.readPermission = readPermission;
     this.writePermission = writePermission;
     this.resource = resource;
@@ -21,7 +21,7 @@ public class ReadWritePermissions implements Permission {
 
   @NotNull
   @Contract(value = "_ -> new", pure = true)
-  public static ReadWritePermissions defaultPermissions(Table resource) {
+  public static ReadWritePermissions defaultPermissions(DataCollection resource) {
     return new ReadWritePermissions(PermissionStatus.DENIED, PermissionStatus.DENIED, resource);
   }
 
@@ -36,7 +36,7 @@ public class ReadWritePermissions implements Permission {
   }
 
   @Override
-  public Table getResource() {
+  public DataCollection getResource() {
     return resource;
   }
 

@@ -1,7 +1,7 @@
 package com.omar.util.impl;
 
 import com.omar.constant.FileExtension;
-import com.omar.model.db.abstraction.Table;
+import com.omar.model.db.abstraction.DataCollection;
 import com.omar.model.db.impl.metadata.Id;
 import com.omar.util.abstraction.RecordPathBuilder;
 import com.omar.util.abstraction.Writer;
@@ -20,16 +20,16 @@ import java.util.Iterator;
 @Primary
 public class JsonWriter implements Writer {
   @Autowired
-  private RecordPathBuilder recordPathBuilder;
+  private RecordPathBuilder recordPathBuilder = new DefaultRecordPathBuilder();
 
   @Override
-  public void write(Id id, JSONObject jsonObject, Table table) {
-    write(id, jsonObject, table.getName());
+  public void write(Id id, JSONObject jsonObject, DataCollection collection) {
+    write(id, jsonObject, collection.getName());
   }
 
   @Override
-  public void write(Id id, JSONObject object, String tableName) {
-    writeJsonObjectToFiles(recordPathBuilder.buildPathString(tableName ,id), object);
+  public void write(Id id, JSONObject object, String collectionName) {
+    writeJsonObjectToFiles(recordPathBuilder.buildRecordPathBuilder(collectionName ,id.toString()), object);
   }
 
   private void writeJsonObjectToFiles(String currentPath, JSONObject object) {
@@ -55,7 +55,7 @@ public class JsonWriter implements Writer {
 
       try (var writer = new BufferedWriter(new FileWriter(filePath))) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put(key, object.get(key).toString());
+        jsonObject.put(key, object.get(key));
         writer.write(jsonObject.toString());
       } catch (IOException e) {
         e.printStackTrace();
@@ -64,7 +64,10 @@ public class JsonWriter implements Writer {
   }
 
   public void delete(File file) {
-    // no need to return any value
-    boolean delOperation = !file.exists() || file.delete();
+    try {
+      org.apache.commons.io.FileUtils.deleteDirectory(file);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

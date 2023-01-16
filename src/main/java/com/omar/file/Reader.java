@@ -1,38 +1,70 @@
 package com.omar.file;
 
-import com.omar.model.db.abstraction.Table;
+import com.omar.constant.CollectionConstants;
+import com.omar.constant.PathConstants;
+import com.omar.model.db.abstraction.DataCollection;
 import com.omar.model.db.impl.metadata.Id;
 import com.omar.util.abstraction.Parser;
 import com.omar.util.abstraction.RecordPathBuilder;
+import com.omar.util.impl.DefaultRecordPathBuilder;
+import org.apache.commons.io.FilenameUtils;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
+import java.util.UUID;
 
 
 @Component
 public class Reader {
   @Autowired
-  private RecordPathBuilder recordPathBuilder;
+  private RecordPathBuilder recordPathBuilder = new DefaultRecordPathBuilder();
   @Autowired
   private Parser parser;
 
 
-  public Object getJsonObject(Table table, Id id) {
-    return getJsonObject(table.getName(), id);
+  public Object getJsonObject(DataCollection collection, Id id) {
+    return getJsonObject(collection.getName(), id);
   }
 
-  public Object getJsonObject(String tableName, Id id) {
+  public Object getJsonObject(String collectionName, Id id) {
     return parser.parse(new File(
-        recordPathBuilder.buildPathString(tableName, id)
+        recordPathBuilder.buildRecordPathBuilder(collectionName, id.toString())
     ));
   }
 
-  public static void main(String[] args) throws IOException {
+  public Object getUserJsonObject(String username) {
+    return parser.parse(new File(
+        recordPathBuilder.buildUserPathString(username)
+    ));
+  }
+  
+  public Object getAllJsonObjects(String collectionName) {
+    JSONObject result = new JSONObject();
+    File collectionDirectory = new File(recordPathBuilder.buildCollectionPathString(collectionName));
 
-//    System.out.println(UUID.randomUUID());
-//    System.out.println(new Reader().read("table", new Id(UUID.fromString("7954bc95-46e3-4d5f-8cf1-12482e618cc5"))));
-//    new Reader().something();
+    boolean isEmptyDataCollection = !collectionDirectory.exists()
+        || !collectionDirectory.isDirectory() 
+        || collectionDirectory.list() == null
+        || !collectionDirectory.getAbsolutePath().contains(PathConstants.TABLES_PATH.path)
+        || Objects.requireNonNull(collectionDirectory.list()).length == 0;
+
+    if (isEmptyDataCollection) {
+      return result;
+    }
+    
+    for (File file: Objects.requireNonNull(collectionDirectory.listFiles())) {
+      String fileName = FilenameUtils.getBaseName(file.getName());
+      result.put(fileName, getJsonObject(collectionName, new Id(UUID.fromString(fileName))));
+    }
+    return result;
+  }
+
+  public static void main(String[] args) throws IOException {
+    Reader reader = new Reader();
+    System.out.println(reader.getAllJsonObjects("test").toString());
   }
 }

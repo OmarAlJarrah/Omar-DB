@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    JSONObject jsonObject = (JSONObject) reader.getJsonObject("USERS", new Id(UUID.fromString(username)));
+    JSONObject jsonObject = (JSONObject) reader.getUserJsonObject(username);
     if (jsonObject.getJSONObject(username).isEmpty()) {
       throw new UsernameNotFoundException("User not found");
     }

@@ -1,7 +1,7 @@
 package com.omar.model.access.abstraction;
 
 import com.omar.model.access.impl.PermissionStatus;
-import com.omar.model.db.abstraction.Table;
+import com.omar.model.db.abstraction.DataCollection;
 
 
 public interface Permission {
@@ -9,5 +9,5 @@ public interface Permission {
 
   PermissionStatus getWritePermission();
 
-  Table getResource();
+  DataCollection getResource();
 }

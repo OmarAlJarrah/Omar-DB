@@ -1,5 +1,10 @@
 package com.omar.api;
 
+import com.omar.file.Reader;
+import com.omar.model.db.impl.metadata.Id;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,15 +15,16 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/read")
 public class ReadApi {
-  @GetMapping("byId/{id}")
-  public String readById(@PathVariable String id){
-    return "Your ID is " + id + " ^^";
+  @Autowired
+  private Reader reader;
+  
+  @GetMapping("byId/{collection}/{id}")
+  public ResponseEntity<String> readById(@PathVariable("collection") String collectionName, @PathVariable("id") String id){
+    return new ResponseEntity<>(reader.getJsonObject(collectionName, new Id(UUID.fromString(id))).toString(), HttpStatus.OK);
   }
 
-  String instanceId = UUID.randomUUID().toString();
-
-  @GetMapping("/test")
-  public String hello() {
-    return String.format("Hello from instance %s", instanceId);
+  @GetMapping("/{collection}/all")
+  public ResponseEntity<String> readAll(@PathVariable("collection") String collectionName) {
+    return new ResponseEntity<>(reader.getAllJsonObjects(collectionName).toString(), HttpStatus.OK);
   }
 }

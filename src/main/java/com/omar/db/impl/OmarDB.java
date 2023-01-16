@@ -2,14 +2,14 @@ package com.omar.db.impl;
 
 import com.omar.db.abstraction.Database;
 import com.omar.model.data.filter.abstraction.Filter;
-import com.omar.model.db.abstraction.Table;
+import com.omar.model.db.abstraction.DataCollection;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public class OmarDB implements Database {
-  private List<Table> tables;
+  private List<DataCollection> collections;
 
 
   @Override
@@ -43,7 +43,7 @@ public class OmarDB implements Database {
   }
 
   @Override
-  public List<Table> getTables() {
+  public List<DataCollection> getDataCollections() {
     return null;
   }
 

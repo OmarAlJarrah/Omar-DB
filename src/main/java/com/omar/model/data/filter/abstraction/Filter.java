@@ -1,5 +1,5 @@
 package com.omar.model.data.filter.abstraction;
 
 public interface Filter {
-  boolean filter(Object table, Filter filter);
+  boolean filter(Object collection, Filter filter);
 }

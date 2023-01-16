@@ -1,9 +1,11 @@
 package com.omar.file;
 
 import com.omar.constant.Concurrency;
-import com.omar.constant.Constant;
+import com.omar.constant.CollectionConstants;
 import com.omar.model.db.impl.metadata.Id;
 import com.omar.util.abstraction.RecordPathBuilder;
+import com.omar.util.impl.DefaultRecordPathBuilder;
+import com.omar.util.impl.FileUtils;
 import com.omar.util.impl.JsonWriter;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,34 +19,34 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 @Component
 public class ConcurrentWriter {
-  @Autowired JsonWriter jsonWriter;
-  @Autowired private RecordPathBuilder recordPathBuilder;
+  @Autowired JsonWriter jsonWriter = new JsonWriter();
+  @Autowired private RecordPathBuilder recordPathBuilder = new DefaultRecordPathBuilder();
 
   private final ConcurrentLinkedDeque<String> LRUManager = new ConcurrentLinkedDeque<>();
   private final Map<String, File> recordLockPool = new ConcurrentHashMap<>();
 
-  public void write(Id id, JSONObject jsonObject, String tableName) {
-    File file = new File(recordPathBuilder.buildPathString(tableName, id));
+  public void write(Id id, JSONObject jsonObject, String collectionName) {
+    File file = new File(recordPathBuilder.buildRecordPathBuilder(collectionName, id.toString()));
 
     appendToPool(file);
     synchronized (recordLockPool.get(file.getAbsolutePath())) {
-      jsonWriter.write(id, jsonObject, tableName);
+      jsonWriter.write(id, jsonObject, collectionName);
     }
   }
 
   public void writeUser(JSONObject user) {
     Id id = new Id(UUID.fromString(user.getString("username")));
     user.put("id", id.toString());
-    File file = new File(recordPathBuilder.buildPathString(String.valueOf(Constant.USERS), id));
+    File file = new File(recordPathBuilder.buildUserPathString(id.toString()));
 
     appendToPool(file);
     synchronized (recordLockPool.get(file.getAbsolutePath())) {
-      jsonWriter.write(id, user, Constant.USERS.name());
+      jsonWriter.write(id, user, CollectionConstants.USERS.name());
     }
   }
 
   public void deleteUser(String username) {
-    jsonWriter.delete(new File(recordPathBuilder.buildPathString(String.valueOf(Constant.USERS), new Id(UUID.fromString(username)))));
+    jsonWriter.delete(new File(recordPathBuilder.buildUserPathString(username)));
   }
 
   private void appendToPool(File file) {
@@ -59,5 +61,13 @@ public class ConcurrentWriter {
       String recordKeyToRemove = LRUManager.pollFirst();
       recordLockPool.remove(recordKeyToRemove);
     }
+  }
+
+  public static void main(String[] args) {
+    ConcurrentWriter writer = new ConcurrentWriter();
+    writer.write(new Id(UUID.randomUUID()),
+        FileUtils.readJsonFile(new File("/Users/oaljarrah/IdeaProjects/Omar-DB/DB/USERS/query.json")),
+        "CollectionX"
+        );
   }
 }

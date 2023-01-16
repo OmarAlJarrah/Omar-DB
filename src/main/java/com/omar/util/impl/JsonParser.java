@@ -1,6 +1,7 @@
 package com.omar.util.impl;
 
 import com.omar.util.abstraction.Parser;
+import org.apache.commons.io.FilenameUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,10 @@ public class JsonParser implements Parser {
   public Object parse(File file) {
     JSONObject result = new JSONObject();
 
+    if (file.getName().contains("xy")) {
+      System.out.println("FOUND");
+    }
+
     if (!file.exists()) {
       result.put(file.getName(), new JSONObject());
       return result;
@@ -31,7 +36,7 @@ public class JsonParser implements Parser {
             .toString();
 
         File childFile = new File(childFilePath);
-        JSONObject currentJsonObject = (JSONObject) parse(childFile.getAbsoluteFile());
+        JSONObject currentJsonObject = (JSONObject) parse(childFile);
         Iterator<String> keys = currentJsonObject.keys();
 
         while (keys.hasNext()) {
@@ -40,7 +45,7 @@ public class JsonParser implements Parser {
         }
       }
 
-      result.put(file.getName(), childJsonObject);
+      result.put(FilenameUtils.getBaseName(file.getName()), childJsonObject);
 
     } else {
       result = FileUtils.readJsonFile(file);
@@ -51,7 +56,7 @@ public class JsonParser implements Parser {
 
   public static void main(String[] args) {
 //    Parser parser = new JsonParser();
-//    var res = parser.parse(new File("/Users/oaljarrah/IdeaProjects/Omar-DB/DB/table/7954bc95-46e3s-4d5f-8cf1-12482e618cc5"));
+//    var res = parser.parse(new File("/Users/oaljarrah/IdeaProjects/Omar-DB/DB/collection/7954bc95-46e3s-4d5f-8cf1-12482e618cc5"));
 //    System.out.println(res.toString());
 
   }

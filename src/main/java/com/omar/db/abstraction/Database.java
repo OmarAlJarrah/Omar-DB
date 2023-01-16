@@ -1,7 +1,7 @@
 package com.omar.db.abstraction;
 
 import com.omar.model.data.filter.abstraction.Filter;
-import com.omar.model.db.abstraction.Table;
+import com.omar.model.db.abstraction.DataCollection;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,5 +14,5 @@ public interface Database {
   Optional<List<Object>> readAnyOf(List<Filter> filters);
   Optional<Object> readById(Long id);
 
-  List<Table> getTables();
+  List<DataCollection> getDataCollections();
 }

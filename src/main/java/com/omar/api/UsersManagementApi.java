@@ -34,7 +34,7 @@ public class UsersManagementApi {
           .build();
 
       service.addUser(user);
-      response = new ResponseEntity<>(gson.toJson(user), HttpStatus.ACCEPTED);
+      response = new ResponseEntity<>(gson.toJson(user), HttpStatus.OK);
     } catch (Exception e) {
       response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
@@ -44,6 +44,6 @@ public class UsersManagementApi {
   @PostMapping("/delete")
   public ResponseEntity<String> deleteUser(@RequestParam("username") String username) {
     service.deleteUser(username);
-    return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 }
