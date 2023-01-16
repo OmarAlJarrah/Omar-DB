@@ -33,15 +33,17 @@ public class UsersManagementApi {
           .password(UUID.randomUUID().toString())
           .build();
 
-      if (!user.getRole().equals(Role.ROLE_ADMIN)) {
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-      }
-
       service.addUser(user);
       response = new ResponseEntity<>(gson.toJson(user), HttpStatus.ACCEPTED);
     } catch (Exception e) {
       response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     return response;
+  }
+
+  @PostMapping("/delete")
+  public ResponseEntity<String> deleteUser(@RequestParam("username") String username) {
+    service.deleteUser(username);
+    return new ResponseEntity<>(HttpStatus.ACCEPTED);
   }
 }

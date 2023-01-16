@@ -38,4 +38,8 @@ public class UserManagementService {
 //    user.addPermission();
     writer.writeUser(new JSONObject(user));
   }
+
+  public void deleteUser(String username) {
+    writer.deleteUser(username);
+  }
 }

@@ -62,4 +62,9 @@ public class JsonWriter implements Writer {
       }
     }
   }
+
+  public void delete(File file) {
+    // no need to return any value
+    boolean delOperation = !file.exists() || file.delete();
+  }
 }
