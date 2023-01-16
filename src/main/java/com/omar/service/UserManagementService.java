@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 public class UserManagementService {
   @Autowired
@@ -21,7 +23,7 @@ public class UserManagementService {
   @Autowired
   private PasswordEncoder encoder;
 
-  public void addUser(User user) throws UserAlreadyExistsException {
+  public void addUser(User user) throws UserAlreadyExistsException, IOException {
     user = new User.UserBuilder()
         .name(user.getName())
         .role(user.getRole())
@@ -39,7 +41,7 @@ public class UserManagementService {
     writer.writeUser(new JSONObject(user));
   }
 
-  public void deleteUser(String username) {
+  public void deleteUser(String username) throws IOException {
     writer.deleteUser(username);
   }
 }

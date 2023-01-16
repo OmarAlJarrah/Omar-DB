@@ -16,7 +16,7 @@ import java.util.StringJoiner;
 public class JsonPartialParser implements PartialParser {
 
   @Autowired
-  private Parser parser = new JsonParser();
+  private Parser parser;
 
   public Object partialParse(File file, JSONObject query) {
     JSONObject result = new JSONObject();

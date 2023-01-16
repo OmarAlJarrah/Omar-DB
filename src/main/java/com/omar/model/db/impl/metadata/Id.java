@@ -12,5 +12,9 @@ public class Id {
   public String toString() {
     return value.toString();
   }
+
+  public static Id fromString(String value) {
+    return new Id(UUID.fromString(value));
+  }
 }
 

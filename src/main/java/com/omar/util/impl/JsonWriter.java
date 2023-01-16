@@ -20,19 +20,19 @@ import java.util.Iterator;
 @Primary
 public class JsonWriter implements Writer {
   @Autowired
-  private RecordPathBuilder recordPathBuilder = new DefaultRecordPathBuilder();
+  private RecordPathBuilder recordPathBuilder;
 
   @Override
-  public void write(Id id, JSONObject jsonObject, DataCollection collection) {
+  public void write(Id id, JSONObject jsonObject, DataCollection collection) throws IOException {
     write(id, jsonObject, collection.getName());
   }
 
   @Override
-  public void write(Id id, JSONObject object, String collectionName) {
-    writeJsonObjectToFiles(recordPathBuilder.buildRecordPathBuilder(collectionName ,id.toString()), object);
+  public void write(Id id, JSONObject object, String collectionName) throws IOException {
+    writeJsonObjectToFiles(recordPathBuilder.buildRecordPathString(collectionName, id.toString()), object);
   }
 
-  private void writeJsonObjectToFiles(String currentPath, JSONObject object) {
+  private void writeJsonObjectToFiles(String currentPath, JSONObject object) throws IOException {
     FileUtils.createDirectoryIfAbsent(currentPath);
 
     Iterator<String> keys = object.keys();
@@ -53,21 +53,14 @@ public class JsonWriter implements Writer {
 
       FileUtils.createFileIfAbsent(filePath);
 
-      try (var writer = new BufferedWriter(new FileWriter(filePath))) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put(key, object.get(key));
-        writer.write(jsonObject.toString());
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+      var writer = new BufferedWriter(new FileWriter(filePath));
+      JSONObject jsonObject = new JSONObject();
+      jsonObject.put(key, object.get(key));
+      writer.write(jsonObject.toString());
     }
   }
 
-  public void delete(File file) {
-    try {
-      org.apache.commons.io.FileUtils.deleteDirectory(file);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+  public void delete(File file) throws IOException {
+    org.apache.commons.io.FileUtils.deleteDirectory(file);
   }
 }

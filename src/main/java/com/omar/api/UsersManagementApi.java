@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @RestController
@@ -36,14 +37,18 @@ public class UsersManagementApi {
       service.addUser(user);
       response = new ResponseEntity<>(gson.toJson(user), HttpStatus.OK);
     } catch (Exception e) {
-      response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
     return response;
   }
 
   @PostMapping("/delete")
   public ResponseEntity<String> deleteUser(@RequestParam("username") String username) {
-    service.deleteUser(username);
-    return new ResponseEntity<>(HttpStatus.OK);
+    try {
+      service.deleteUser(username);
+    } catch (IOException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(HttpStatus.ACCEPTED);
   }
 }

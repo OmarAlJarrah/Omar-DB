@@ -1,10 +1,9 @@
 package com.omar.file;
 
-import com.omar.constant.Concurrency;
 import com.omar.constant.CollectionConstants;
+import com.omar.constant.Concurrency;
 import com.omar.model.db.impl.metadata.Id;
 import com.omar.util.abstraction.RecordPathBuilder;
-import com.omar.util.impl.DefaultRecordPathBuilder;
 import com.omar.util.impl.FileUtils;
 import com.omar.util.impl.JsonWriter;
 import org.json.JSONObject;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,14 +19,14 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 @Component
 public class ConcurrentWriter {
-  @Autowired JsonWriter jsonWriter = new JsonWriter();
-  @Autowired private RecordPathBuilder recordPathBuilder = new DefaultRecordPathBuilder();
+  @Autowired JsonWriter jsonWriter;
+  @Autowired private RecordPathBuilder recordPathBuilder;
 
   private final ConcurrentLinkedDeque<String> LRUManager = new ConcurrentLinkedDeque<>();
   private final Map<String, File> recordLockPool = new ConcurrentHashMap<>();
 
-  public void write(Id id, JSONObject jsonObject, String collectionName) {
-    File file = new File(recordPathBuilder.buildRecordPathBuilder(collectionName, id.toString()));
+  public void write(Id id, JSONObject jsonObject, String collectionName) throws IOException {
+    File file = new File(recordPathBuilder.buildRecordPathString(collectionName, id.toString()));
 
     appendToPool(file);
     synchronized (recordLockPool.get(file.getAbsolutePath())) {
@@ -34,7 +34,7 @@ public class ConcurrentWriter {
     }
   }
 
-  public void writeUser(JSONObject user) {
+  public void writeUser(JSONObject user) throws IOException {
     Id id = new Id(UUID.fromString(user.getString("username")));
     user.put("id", id.toString());
     File file = new File(recordPathBuilder.buildUserPathString(id.toString()));
@@ -45,8 +45,12 @@ public class ConcurrentWriter {
     }
   }
 
-  public void deleteUser(String username) {
+  public void deleteUser(String username) throws IOException {
     jsonWriter.delete(new File(recordPathBuilder.buildUserPathString(username)));
+  }
+
+  public void delete(String collectionName, String id) throws IOException {
+    jsonWriter.delete(new File(recordPathBuilder.buildRecordPathString(collectionName, id)));
   }
 
   private void appendToPool(File file) {
@@ -63,7 +67,7 @@ public class ConcurrentWriter {
     }
   }
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
     ConcurrentWriter writer = new ConcurrentWriter();
     writer.write(new Id(UUID.randomUUID()),
         FileUtils.readJsonFile(new File("/Users/oaljarrah/IdeaProjects/Omar-DB/DB/USERS/query.json")),

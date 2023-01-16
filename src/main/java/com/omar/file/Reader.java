@@ -1,12 +1,10 @@
 package com.omar.file;
 
-import com.omar.constant.CollectionConstants;
 import com.omar.constant.PathConstants;
 import com.omar.model.db.abstraction.DataCollection;
 import com.omar.model.db.impl.metadata.Id;
 import com.omar.util.abstraction.Parser;
 import com.omar.util.abstraction.RecordPathBuilder;
-import com.omar.util.impl.DefaultRecordPathBuilder;
 import org.apache.commons.io.FilenameUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,7 @@ import java.util.UUID;
 @Component
 public class Reader {
   @Autowired
-  private RecordPathBuilder recordPathBuilder = new DefaultRecordPathBuilder();
+  private RecordPathBuilder recordPathBuilder;
   @Autowired
   private Parser parser;
 
@@ -32,7 +30,7 @@ public class Reader {
 
   public Object getJsonObject(String collectionName, Id id) {
     return parser.parse(new File(
-        recordPathBuilder.buildRecordPathBuilder(collectionName, id.toString())
+        recordPathBuilder.buildRecordPathString(collectionName, id.toString())
     ));
   }
 

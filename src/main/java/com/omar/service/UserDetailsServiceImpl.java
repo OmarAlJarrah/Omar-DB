@@ -3,7 +3,6 @@ package com.omar.service;
 import com.google.gson.Gson;
 import com.omar.file.Reader;
 import com.omar.model.access.impl.User;
-import com.omar.model.db.impl.metadata.Id;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

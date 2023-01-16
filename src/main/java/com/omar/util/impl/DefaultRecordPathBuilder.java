@@ -38,7 +38,7 @@ public class DefaultRecordPathBuilder implements RecordPathBuilder {
         .toString();
   }
 
-  public String buildRecordPathBuilder(String collection, String id) {
+  public String buildRecordPathString(String collection, String id) {
     return new StringJoiner("/")
         .add(buildCollectionPathString(collection))
         .add(id)

@@ -18,8 +18,8 @@ public class ReadApi {
   @Autowired
   private Reader reader;
   
-  @GetMapping("byId/{collection}/{id}")
-  public ResponseEntity<String> readById(@PathVariable("collection") String collectionName, @PathVariable("id") String id){
+  @GetMapping("{collection}/{id}")
+  public ResponseEntity<String> read(@PathVariable("collection") String collectionName, @PathVariable("id") String id){
     return new ResponseEntity<>(reader.getJsonObject(collectionName, new Id(UUID.fromString(id))).toString(), HttpStatus.OK);
   }
 
