@@ -23,7 +23,7 @@ Limitations within the interface environment are overcome using semantic virtual
 
 
 ## Types of NoSQL Databases
-There are several different types of NoSQL databases, each with their own strengths and weaknesses. Some of the most common types include:
+There are several types of NoSQL databases, each with their own strengths and weaknesses. Some of the most common types include:
 
 + **Document databases**: These databases store data as documents (such as JSON or XML) and are designed for handling semi-structured data. Examples include MongoDB and Couchbase.
 

@@ -24,10 +24,6 @@ This project is a nothing but a POC, and is considered to be moved to Rust Progr
 + Should I forget about the Web API idea and simply provide a programmatic API/SDK?
 + Would SSH connections be of any advantage?
 
-### 4- Concurrency
-+ Haven't though about that yet :")
-
-
 ## High-Level Architecture Design Notes & Decisions
 
 ### 1- _Master Nodes_:

@@ -20,13 +20,11 @@
    1) Authentication & Authorization
    2) SaaS - Software as a Service
    3) Data Management
-   4) Filtering
-   5) Concurrency Management
-   6) Data Recovery
-   7) Atomic Transactions
+   4) Concurrency Management
+   5) Data Recovery
+   6) Atomic Transactions
+   7) Kafka Communication (P2P)
    8) Reverse Proxy Load Balancer
-   9) Low-Level Architecture: Services Interaction & Workflow
-   10) High-Level Architecture: Publisher-Subscriber
-   11) High-Level Architecture: Master-Slave
-   12) High-Level Architecture: Peer-to-Peer
+   9) Low-Level Architecture: Services Sample Workflow
+   10) High-Level Architecture: System Design
    
