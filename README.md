@@ -1,3 +1,4 @@
+```README needs update, but it still can help you get an idea on the whole project idea in case you are interested.```
 # Omar-DB
 #### BASE Model Database for Microservices & Monolithic Environments, with ACID support for a cost
 
